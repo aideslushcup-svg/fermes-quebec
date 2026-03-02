@@ -107,9 +107,19 @@ body,
   font-size: 14px;
   font-weight: 700;
   color: white;
+  background: linear-gradient(135deg, #2d6a4f, #52b788);
   border: 3px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(45, 106, 79, 0.2);
   transition: transform 0.15s ease;
+}
+
+.cluster-large {
+  background: linear-gradient(135deg, #003087, #1a6fa8);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(0, 48, 135, 0.2);
+}
+
+.cluster-medium {
+  background: linear-gradient(135deg, #1a5c3a, #40916c);
 }
 
 .cluster-icon:hover {

@@ -53,15 +53,12 @@ export default function App() {
     try {
       const pos = await getUserPosition()
       setUserPosition(pos)
-      if (!filters.radius) {
-        setFilters((f) => ({ ...f, radius: 50 }))
-      }
     } catch (err) {
       alert("Impossible d'obtenir votre position. Vérifiez les permissions de localisation.")
     } finally {
       setLocating(false)
     }
-  }, [filters.radius])
+  }, [])
 
   // Filter farms
   const filteredFarms = useMemo(() => {

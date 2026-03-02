@@ -65,7 +65,10 @@ function MapResizer({ panelOpen }: { panelOpen: boolean }) {
 function FlyToUser({ position }: { position: UserPosition }) {
   const map = useMap()
   useEffect(() => {
-    map.flyTo([position.lat, position.lng], 10, { duration: 1.5 })
+    // Keep current zoom or use 8 max — don't zoom in too much
+    const currentZoom = map.getZoom()
+    const targetZoom = Math.min(Math.max(currentZoom, 7), 8)
+    map.flyTo([position.lat, position.lng], targetZoom, { duration: 1.5 })
   }, [position, map])
   return null
 }
