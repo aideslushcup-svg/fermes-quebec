@@ -88,14 +88,14 @@ export default function DetailPanel({ point, onClose, userPosition, onProductCli
     <>
       {/* Mobile: bottom sheet overlay */}
       <div
-        className="md:hidden fixed inset-0 bg-black/30 z-40"
+        className="md:hidden fixed inset-0 bg-black/30 z-[9998]"
         onClick={onClose}
       />
 
       <div
         className={`
           panel-enter flex flex-col bg-white shadow-panel overflow-hidden
-          fixed bottom-0 left-0 right-0 z-50 max-h-[85vh] rounded-t-2xl
+          fixed bottom-0 left-0 right-0 z-[9999] max-h-[85vh] rounded-t-2xl
           md:static md:w-[380px] md:flex-shrink-0 md:h-full md:max-h-none md:rounded-none
           md:border-l md:border-border-color
         `}
