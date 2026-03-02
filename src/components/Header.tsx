@@ -1,10 +1,13 @@
+import { Plus } from 'lucide-react'
+
 interface HeaderProps {
   farmCount: number
   waterCount: number
   visibleCount: number
+  onAddFarm: () => void
 }
 
-export default function Header({ farmCount, waterCount, visibleCount }: HeaderProps) {
+export default function Header({ farmCount, waterCount, visibleCount, onAddFarm }: HeaderProps) {
   return (
     <header
       className="flex-shrink-0 relative overflow-hidden"
@@ -40,7 +43,7 @@ export default function Header({ farmCount, waterCount, visibleCount }: HeaderPr
           </div>
         </div>
 
-        {/* Right: counters */}
+        {/* Right: counters + add button */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           <div className="bg-white/15 backdrop-blur-sm rounded-lg sm:rounded-xl px-2 sm:px-3 py-1 sm:py-1.5 text-center border border-white/20">
             <div className="text-white font-bold text-sm sm:text-lg leading-none">{farmCount}</div>
@@ -57,8 +60,20 @@ export default function Header({ farmCount, waterCount, visibleCount }: HeaderPr
             </div>
           )}
 
+          {/* Add farm button */}
+          <button
+            onClick={onAddFarm}
+            className="ml-1 flex items-center gap-1.5 bg-white/20 hover:bg-white/30 border border-white/30
+                       text-white text-xs sm:text-sm font-medium px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl
+                       transition-all duration-150 active:scale-95"
+          >
+            <Plus size={15} />
+            <span className="hidden sm:inline">Ajouter une ferme</span>
+            <span className="sm:hidden">Ajouter</span>
+          </button>
+
           {/* Prototype badge — hidden on small screens */}
-          <div className="ml-1 bg-white/10 border border-white/20 rounded-lg px-2 py-1 hidden md:block">
+          <div className="ml-1 bg-white/10 border border-white/20 rounded-lg px-2 py-1 hidden lg:block">
             <span className="text-white/50 text-xs font-medium">Prototype · Données fictives</span>
           </div>
         </div>

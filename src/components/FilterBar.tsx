@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Search, Leaf, Droplets, LayoutGrid, Filter, SlidersHorizontal, X } from 'lucide-react'
-import { Filters } from '@/types'
+import { Search, Leaf, Droplets, LayoutGrid, Filter, SlidersHorizontal, X, Crosshair } from 'lucide-react'
+import { Filters, UserPosition } from '@/types'
 
 interface FilterBarProps {
   filters: Filters
   onChange: (f: Filters) => void
   regions: string[]
+  userPosition: UserPosition | null
 }
 
 type TypeOption = { value: Filters['type']; label: string; shortLabel: string; icon: React.ReactNode }
@@ -16,11 +17,13 @@ const TYPE_OPTIONS: TypeOption[] = [
   { value: 'water', label: "Sources d'eau", shortLabel: 'Eau', icon: <Droplets size={14} /> },
 ]
 
-export default function FilterBar({ filters, onChange, regions }: FilterBarProps) {
+const RADIUS_OPTIONS = [5, 10, 25, 50, 100]
+
+export default function FilterBar({ filters, onChange, regions, userPosition }: FilterBarProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const set = (partial: Partial<Filters>) => onChange({ ...filters, ...partial })
 
-  const hasActiveFilters = filters.bio || filters.region || filters.search
+  const hasActiveFilters = filters.bio || filters.region || filters.search || filters.radius
 
   return (
     <div className="flex-shrink-0 bg-white border-b border-border-color shadow-sm">
@@ -64,7 +67,7 @@ export default function FilterBar({ filters, onChange, regions }: FilterBarProps
           </button>
         )}
 
-        {/* Desktop: region + search inline */}
+        {/* Desktop: region + search + radius inline */}
         <div className="hidden sm:flex items-center gap-3 flex-1">
           <div className="h-6 w-px bg-border-color" />
 
@@ -82,6 +85,24 @@ export default function FilterBar({ filters, onChange, regions }: FilterBarProps
               ))}
             </select>
           </div>
+
+          {/* Radius selector — only when geolocated */}
+          {userPosition && (
+            <div className="flex items-center gap-1.5">
+              <Crosshair size={14} className="text-text-muted flex-shrink-0" />
+              <select
+                value={filters.radius ?? ''}
+                onChange={(e) => set({ radius: e.target.value ? Number(e.target.value) : null })}
+                className="text-sm text-text-dark bg-white border border-border-color rounded-xl px-3 py-1.5
+                           focus:outline-none focus:border-meadow-green cursor-pointer"
+              >
+                <option value="">Sans limite</option>
+                {RADIUS_OPTIONS.map((r) => (
+                  <option key={r} value={r}>{r} km</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="flex items-center gap-2 bg-gray-50 border border-border-color rounded-xl px-3 py-1.5
                           focus-within:border-meadow-green focus-within:bg-white transition-all flex-1 min-w-[180px] max-w-xs">
@@ -135,6 +156,24 @@ export default function FilterBar({ filters, onChange, regions }: FilterBarProps
               ))}
             </select>
           </div>
+
+          {/* Radius — only when geolocated */}
+          {userPosition && (
+            <div className="flex items-center gap-2">
+              <Crosshair size={14} className="text-text-muted flex-shrink-0" />
+              <select
+                value={filters.radius ?? ''}
+                onChange={(e) => set({ radius: e.target.value ? Number(e.target.value) : null })}
+                className="flex-1 text-sm text-text-dark bg-white border border-border-color rounded-xl px-3 py-2
+                           focus:outline-none focus:border-meadow-green"
+              >
+                <option value="">Rayon : sans limite</option>
+                {RADIUS_OPTIONS.map((r) => (
+                  <option key={r} value={r}>Dans un rayon de {r} km</option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Search */}
           <div className="flex items-center gap-2 bg-gray-50 border border-border-color rounded-xl px-3 py-2

@@ -8,12 +8,13 @@ export interface Farm {
   products: string[]
   certified_bio: boolean
   story: string
-  owner: string
+  owner?: string
   founded: number
   address: string
   phone?: string
   website?: string
   schedule?: string
+  userAdded?: boolean
 }
 
 export interface WaterSource {
@@ -40,4 +41,10 @@ export interface Filters {
   bio: boolean
   region: string
   search: string
+  radius: number | null // km — null = no limit
+}
+
+export interface UserPosition {
+  lat: number
+  lng: number
 }
