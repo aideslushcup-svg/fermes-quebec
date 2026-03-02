@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Global ──────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ── Leaflet overrides ───────────────────── */
+.leaflet-container {
+  font-family: 'Poppins', sans-serif;
+  background: #e8f0e3;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  opacity: 0.7;
+}
+
+/* ── Custom map markers ──────────────────── */
+.map-marker {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 3px solid white;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.map-marker::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid white;
+}
+
+.marker-farm-bio {
+  background: linear-gradient(135deg, #2d6a4f, #40916c);
+}
+
+.marker-farm-bio::after {
+  border-top-color: #2d6a4f;
+}
+
+.marker-farm {
+  background: linear-gradient(135deg, #52b788, #74c69d);
+}
+
+.marker-farm::after {
+  border-top-color: #52b788;
+}
+
+.marker-water-tested {
+  background: linear-gradient(135deg, #1a6fa8, #2a9fd6);
+}
+
+.marker-water-tested::after {
+  border-top-color: #1a6fa8;
+}
+
+.marker-water {
+  background: linear-gradient(135deg, #4a9fd4, #74c0e8);
+}
+
+.marker-water::after {
+  border-top-color: #4a9fd4;
+}
+
+.marker-selected {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transform: scale(1.2) !important;
+  z-index: 1000 !important;
+}
+
+/* ── Scrollbar ───────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4e4d8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52b788;
+}
+
+/* ── Detail panel slide ──────────────────── */
+/* Mobile: slide up from bottom */
+@media (max-width: 767px) {
+  .panel-enter {
+    animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+}
+
+/* Desktop: slide in from right */
+@media (min-width: 768px) {
+  .panel-enter {
+    animation: slideIn 0.25s ease forwards;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── Mobile touch improvements ───────────── */
+@media (max-width: 767px) {
+  .map-marker {
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+  }
+
+  .leaflet-control-zoom {
+    margin-top: 8px !important;
+    margin-right: 8px !important;
+  }
+}
